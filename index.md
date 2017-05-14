@@ -1,3 +1,3 @@
 Placeholder
 
-[notes/](Notes)
+[Notes](notes/)
