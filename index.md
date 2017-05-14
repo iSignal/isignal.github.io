@@ -1,3 +1,3 @@
 Placeholder
 
-[notes/index.md] (Notes)
+[notes/index.md](Notes)
