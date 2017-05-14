@@ -10,7 +10,8 @@ This process is far easier in [Google Chrome](https://www.google/com/chrome). To
 1. Save XML of the form below, modified for your use case into a local file on your machine. The particular example below allows Firefox to search Google for only past year queries by default.
 
     >```<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/"><ShortName>Google-past-year</ShortName><Description>Search Google for last year only</Description><Url method="get" type="text/html" template="https://www.google.com/search?q={searchTerms}&amp;tbs=qdr:y"/></OpenSearchDescription>```
-        This XML follows the [OpenSearch XML spec](https://developer.mozilla.org/en-US/Add-ons/Creating_OpenSearch_plugins_for_Firefox).
+    
+    This XML follows the [OpenSearch XML spec](https://developer.mozilla.org/en-US/Add-ons/Creating_OpenSearch_plugins_for_Firefox).
 1. Browse to Firefox->Preferences->Search, click "Add more search engine..." [as shown here](custom-search-mozilla.png). You can set this to be your default engine if you so prefer.
 
 
