@@ -14,5 +14,5 @@ This process is far easier in [Google Chrome](https://www.google/com/chrome). To
     This XML follows the [OpenSearch XML spec](https://developer.mozilla.org/en-US/Add-ons/Creating_OpenSearch_plugins_for_Firefox).
 1. Browse to Firefox->Preferences->Search, click "Add more search engine..." [as shown here](custom-search-mozilla.png). You can set this to be your default engine if you so prefer.
 
-
+-----------------------------------
 *Sanketh I*
