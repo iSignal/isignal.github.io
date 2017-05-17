@@ -7,7 +7,7 @@ If you're looking to script different aspects of Jenkins or simply prefer a comm
 
 ## Built-in CLI
 
-All jenkins installations ship with a [jar file](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI) that allows you to run commands against the installation. The JAR works by SSH-ing to a special port exposed by the Jenkins server and runs commands against that SSH server. 
+All jenkins installations ship with a [JAR file](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI) that allows you to run commands against the installation. The JAR works by SSH-ing to a special port exposed by the Jenkins server and runs commands against that SSH server. 
 
 ### Installation 
 
@@ -24,9 +24,8 @@ Before you start running commands, you need a way to authenticate to the Jenkins
 `ssh-keygen -t rsa && cat ~/.ssh/id_rsa.pub` and copy the resulting _public_ key into the [SSH keys section](https://jenkins.io/doc/book/resources/managing/cli-adding-ssh-public-keys.png) at `http://YOUR_JENKINS_HOSTNAME/user/YOUR_USERNAME/configure`. If you use this approach, know that ssh-agent is not supported, meaning you need to either enter a passphrase constantly or skip having one.
 2. Supply your credentials via a local file to the command. You can generate an API token at `http://YOUR_JENKINS_HOSTNAME/user/YOUR_USERNAME/configure` using [Show API Token](https://jenkins.io/doc/book/resources/managing/cli-adding-ssh-public-keys.png). Then run 
 
-
-       cat 'YOUR_USERNAME:YOUR_API_TOKEN' > jenkins_secret
-       java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME -auth @jenkins_secret who-am-i   
+       $  echo 'YOUR_USERNAME:YOUR_API_TOKEN' > jenkins_secret
+       $ java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME -auth @jenkins_secret who-am-i   
 
 ### Commands
 1. List jobs
