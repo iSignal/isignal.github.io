@@ -1,8 +1,24 @@
+
 # Jenkins from the command line
 
 *May 17 2017*
 
 If you're looking to script different aspects of Jenkins or simply prefer a command line version of Jenkins' dialogs, you have a few options:
+
+
+<!-- TOC -->
+
+- [Jenkins from the command line](#jenkins-from-the-command-line)
+    - [Built-in CLI](#built-in-cli)
+        - [Installation](#installation)
+        - [Authentication](#authentication)
+        - [Commands](#commands)
+    - [Python API](#python-api)
+        - [Installation](#installation-1)
+        - [Authentication](#authentication-1)
+        - [Commands](#commands-1)
+
+<!-- /TOC -->
 
 
 ## Built-in CLI
