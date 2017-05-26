@@ -1,0 +1,87 @@
+<h1>Jenkins from the command line</h1>
+<p><em>May 17 2017</em></p>
+<p>If you're looking to script different aspects of Jenkins or simply prefer a command line version of Jenkins' dialogs, you have a few options:</p>
+<!-- TOC -->
+<ul>
+<li><a href="#jenkins-from-the-command-line">Jenkins from the command line</a>
+<ul>
+<li><a href="#built-in-cli">Built-in CLI</a>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#commands">Commands</a></li>
+</ul>
+</li>
+<li><a href="#python-api">Python API</a>
+<ul>
+<li><a href="#installation-1">Installation</a></li>
+<li><a href="#authentication-1">Authentication</a></li>
+<li><a href="#commands-1">Commands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2>Built-in CLI</h2>
+<p>All jenkins installations ship with a <a href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI">JAR file</a> that allows you to run commands against the installation. The JAR works by SSH-ing to a special port exposed by the Jenkins server and runs commands against that SSH server.</p>
+<h3>Installation</h3>
+<p>You can download the jar file by running</p>
+<pre><code> wget http://YOUR_JENKINS_HOSTNAME/jnlpJars/jenkins-cli.jar
+ java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME help
+ # use https if you have a certificate set up
+</code></pre>
+<h3>Authentication</h3>
+<p>Before you start running commands, you need a way to authenticate to the Jenkins server. You can do this in two ways:</p>
+<ol>
+<li>
+<p>One cool benefit of the SSH-based design is that you can use SSH keys to authenticate to the server. You can <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2">generate a key pair</a> via
+<code>ssh-keygen -t rsa &amp;&amp; cat ~/.ssh/id_rsa.pub</code> and copy the resulting <em>public</em> key into the <a href="https://jenkins.io/doc/book/resources/managing/cli-adding-ssh-public-keys.png">SSH keys section</a> at <code>http://YOUR_JENKINS_HOSTNAME/user/YOUR_USERNAME/configure</code>. If you use this approach, know that ssh-agent is not supported, meaning you need to either enter a passphrase constantly or skip having one.</p>
+</li>
+<li>
+<p>Supply your credentials via a local file to the command. You can generate an API token at <code>http://YOUR_JENKINS_HOSTNAME/user/YOUR_USERNAME/configure</code> using <a href="https://jenkins.io/doc/book/resources/managing/cli-adding-ssh-public-keys.png">Show API Token</a>. Then run</p>
+<pre><code>$  echo 'YOUR_USERNAME:YOUR_API_TOKEN' &gt; jenkins_secret
+$ java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME -auth @jenkins_secret who-am-i   
+</code></pre>
+</li>
+</ol>
+<h3>Commands</h3>
+<ol>
+<li>
+<p>List jobs</p>
+<pre><code>java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME list-jobs
+</code></pre>
+</li>
+<li>
+<p>Get job details returns job details in XML format</p>
+<pre><code>java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME get-job foo
+</code></pre>
+</li>
+<li>
+<p>Create and update job take job details in XML format</p>
+<pre><code>cat job.xml | java -jar ./jenkins-cli.jar -s http://YOUR_JENKINS_HOSTNAME create-job foo
+</code></pre>
+</li>
+</ol>
+<h2>Python API</h2>
+<p>You can use the <a href="https://python-jenkins.readthedocs.io/en/latest/">python-jenkins</a> package to do similar operations from Python. Internally, this uses a different mechanism - the REST API - to perform operations aganist the server. One advantage of this package is that it sometimes uses the friendlier JSON format instead of XML (though job creation, details still use XML).</p>
+<h3>Installation</h3>
+<pre><code>$ pip install --user python-jenkins
+$ python
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; from jenkins import Jenkins
+&gt;&gt;&gt; help(Jenkins)
+</code></pre>
+<p>If you do not have <code>pip</code>, <a href="https://pip.pypa.io/en/stable/installing/">go here</a></p>
+<h3>Authentication</h3>
+<p>Instead of directly using your password, the API token from <code>http://YOUR_JENKINS_HOSTNAME/user/YOUR_USERNAME/configure</code> using <a href="https://jenkins.io/doc/book/resources/managing/cli-adding-ssh-public-keys.png">Show API Token</a> is recommended.</p>
+<pre><code>$ python
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; from jenkins import Jenkins
+&gt;&gt;&gt; j = Jenkins(url='YOUR_JENKINS_HOSTNAME', password='YOUR_API_TOKEN')
+&gt;&gt;&gt; j.get_all_jobs()
+</code></pre>
+<h3>Commands</h3>
+<p>Consult the <a href="https://python-jenkins.readthedocs.io/en/latest/api.html">full reference</a> or use help within the Python shell.</p>
+<hr>
+<p><em>Sanketh I</em></p>
