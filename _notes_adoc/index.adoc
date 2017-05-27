@@ -1,0 +1,4 @@
+= Tech Notes
+
+* link:custom-search-mozilla.html[Installing a custom search engine for Mozilla Firefox]
+* link:jenkins-cli.html[Jenkins from the command line]
