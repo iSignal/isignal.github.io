@@ -63,12 +63,17 @@ Instead of directly using your password, the API token from `http://YOUR_JENKINS
     $ python
     Type "help", "copyright", "credits" or "license" for more information.
     >>> from jenkins import Jenkins
-    >>> j = Jenkins(url='YOUR_JENKINS_HOSTNAME', password='YOUR_API_TOKEN')
+    >>> j = Jenkins(url='http://YOUR_JENKINS_HOSTNAME', username='YOUR_USERNAME', password='YOUR_API_TOKEN')
+    >>> j.get_whoami()
     >>> j.get_all_jobs()
 
 === Commands
 
 Consult the https://python-jenkins.readthedocs.io/en/latest/api.html[full reference] or use help within the Python shell.
+
+=== Notes
+
+It appears that the Python/REST API can be used to update/read Jenkins folders (folders are available via https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Folders+Plugin[this plugin].
 
 ---
 _Sanketh I_

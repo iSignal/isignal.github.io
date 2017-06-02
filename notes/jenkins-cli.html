@@ -439,6 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_installation_2">Installation</a></li>
 <li><a href="#_authentication_2">Authentication</a></li>
 <li><a href="#_commands_2">Commands</a></li>
+<li><a href="#_notes">Notes</a></li>
 </ul>
 </li>
 </ul>
@@ -558,7 +559,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 <pre>$ python
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; from jenkins import Jenkins
-&gt;&gt;&gt; j = Jenkins(url='YOUR_JENKINS_HOSTNAME', password='YOUR_API_TOKEN')
+&gt;&gt;&gt; j = Jenkins(url='http://YOUR_JENKINS_HOSTNAME', username='YOUR_USERNAME', password='YOUR_API_TOKEN')
+&gt;&gt;&gt; j.get_whoami()
 &gt;&gt;&gt; j.get_all_jobs()</pre>
 </div>
 </div>
@@ -567,6 +569,12 @@ Type "help", "copyright", "credits" or "license" for more information.
 <h3 id="_commands_2">Commands</h3>
 <div class="paragraph">
 <p>Consult the <a href="https://python-jenkins.readthedocs.io/en/latest/api.html">full reference</a> or use help within the Python shell.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notes">Notes</h3>
+<div class="paragraph">
+<p>It appears that the Python/REST API can be used to update/read Jenkins folders (folders are available via <a href="https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Folders+Plugin">this plugin</a>.</p>
 </div>
 <hr>
 <div class="paragraph">
@@ -578,7 +586,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-26 19:00:04 PDT
+Last updated 2017-06-01 22:47:32 PDT
 </div>
 </div>
 </body>
