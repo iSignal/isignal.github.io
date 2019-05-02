@@ -1,24 +1,43 @@
-= A guide to applying for an OCI card for a US child (minor) 
-May 1 2019
+= A guide to applying for an Indian OCI card for a US child 
+
 :toc: left
-
-+++
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
-+++
-
-***
 
 == Introduction
 
-=== What this is?
+So you want to apply for a new Overseas Citizen of India (OCI) card for your kid in USA?
 
-Presumably, you are here because you are looking for some clarity in the midst of the complicated process footnote:[Little known fact: The application process also works as a mental aptitude test that also weeds out unworthy applicants. Talk about hidden meanings!] of applying for an OCI card for your child (US minor). I've been through this experience and this document is my attempt to make this less painful for you.
+++++
+<details> <summary><a>What this guide is?</a>
+</summary><div>
+++++
 
-=== What this is not?
+
+Presumably, you are here because you are looking for some clarity in the midst of the +++<abbr title="Little known fact: The application process also works as a mental aptitude test that also weeds out unworthy applicants. Talk about hidden meanings!">complicated process</abbr>+++ of applying for an OCI card for your child in USA (_New OCI card for US minor_). I've been through this experience and this document is my attempt to make this less painful for you.
+++++
+</div></details>
+++++
+
+
+***
+
+++++
+<details> <summary><a>What this guide is not?</a>
+</summary><div>
+++++
 
 This is not intended to be an offical guide to the process of applying for an OCI card. The https://www.in.ckgs.us/oci/how-to-apply[official website is here]. You are responsible for double checking any information presented here.
 
+++++
+</div></details>
+++++
+
+***
+
 === Do you really need an OCI card for your child?
+
+++++
+<details> <summary><a>Alternate visa options</a></summary><div>
+++++
 
 For visits to India up to 6 months, you have two alternative options
 
@@ -33,30 +52,36 @@ stay for https://www.in.ckgs.us/faq/visa/general-visa-questions/487/what-is-the-
 
 Both of these are easier to apply for than OCI cards.
 
+++++
+</div></details>
+++++
 
-== Application process: high level 
+== An outline of the entire process 
 
-Here's the high level picture.
+Here's the high level picture. 
 
-. Start at the CKGS website, get a temporary id, fill some forms and pay the fees.
+. Start at the https://www.in.ckgs.us/oci/how-to-apply[CKGS website] (_you will get a temporary application id_), fill some forms and pay the fees.
 
 . Go to the the Govt of India OCI website, fill some more forms and upload copies of some documents. At the end, get an application id and an OCI application form (PDF) that will be all filled out for you.
 
-. Bring the Govt of India application id back to CKGS and tie it in with the previous CKGS temporary id. The CKGS website will then present a checklist of documents to assemble (including the original passport and the Govt of India OCI form from the earlier step). 
+. Bring the Govt of India application id back to CKGS and tie it in with the previous CKGS temporary id. The CKGS website will then present a checklist of documents to assemble (_the checklist includes Govt of India OCI form from the earlier step_). 
 
 . Send these documents over to CKGS 
 
-. Get back the original passport from CKGS within around 2 weeks(?)
+. Get back the original passport from CKGS within around 2 weeks(?) and the actual OCI card within around 3 months(?)
 
-. Get the OCI card within around 3 months(?)
+== 1. CKGS website: Fill online forms, pay
 
-== CKGS website: Fill online forms, pay
+++++
+<details> <summary><a>Details of Step 1 on the CKGS website</a>
+</summary><div>
+++++
 
 . Start by filling out the forms at https://www.in.ckgs.us/oci/ 
 
-. During this process, you will get a temporary id called a *Web Reference Number*. You can use this to resume the series of forms in Step 1 if you cannot complete them in one go.
+. During this process, you will get a temporary id called a *Web Reference Number*. You can use this to resume the series of forms in Step 1 if you cannot complete them in one go (fill this id into link:bottom-bar.png[the footer bar at the bottom]).
 
-. At a certain point, you will be presented with a gigantic document checklist that may make no sense at this point footnote:[This is another hidden test to check if you scare easily. Bravery in the face of interminable checklists is a critical requirement for OCI cards.]. Save this checklist because you will need it later.
+. At a certain point, you will be presented with a gigantic document checklist that +++<abbr title="This is another hidden test to check if you scare easily. Bravery in the face of interminable checklists is a critical requirement for OCI cards.">may make no sense at this point</abbr>+++. Save this checklist because you will need it later.
 
 . You will be asked if you want to drop off the final forms personally or ship them to CKGS. I would recommend dropping them off in person footnote:[Dropping them off should,ideally, reduce the chance of snafus in the process and increase the chance that you talk to a real person that may clarify some of the inevitable doubts you will have]. If that is not possible, choose to pay CKGS for all shipping costs (Fedex was the carrier I used).
 
@@ -64,11 +89,20 @@ Here's the high level picture.
 
 . At this point, CKGS will send you over to the Govt Of India website with a bunch of instructions.
 
-== Govt of India website: fill out some more forms
+++++
+</div></details>
+++++
 
-https://www.in.ckgs.us/faq/oci/government-website-questions/1000/how-do-i-fill-the-government-form#1000[Useful resource to consult]
+== 2. Govt of India website: fill out some more forms
 
-. Make sure you have the files ready to upload in this step
+++++
+<details> <summary><a>Details of Step 2 on the Govt of India website</a>
+</summary><div>
+++++
+
+https://www.in.ckgs.us/faq/oci/government-website-questions/1000/how-do-i-fill-the-government-form#1000[This page is a useful resource to consult during this step.]
+
+. Make sure you have the files ready to upload in this step. The checklist you saved in Step 1 should come in handy now.
 .. Passport photo 
 +
 JPG Max 200 KB, https://www.in.ckgs.us/faq/oci/photo-and-signature-specifications/836/what-are-the-oci-photo-specifications-for-minors#836[more specifications here].
@@ -76,41 +110,75 @@ JPG Max 200 KB, https://www.in.ckgs.us/faq/oci/photo-and-signature-specification
 .. Thumb impression of the child
 +
 JPG Max 200 KB, 1:3 height:width ratio, https://www.in.ckgs.us/faq/oci/photo-and-signature-specifications/839/what-are-the-oci-signature-specifications-for-minors#839[more specifications here]. 
-Left thumb for boys, right thumb for girls.footnote:[Left for boys, right for girls? In case you forgot that you were dealing with Indian bureacracy, this clause right here should jolt you into attention]
 +
-I got https://www.joann.com/hampton-arts-washable-ink-pad/xprd77670.html[this stamp pad] to take the fingerprint.
++++<abbr title="Left for boys, right for girls? In case you forgot that you were dealing with Indian bureacracy, this clause right here should jolt you into attention">Left thumb for boys, right thumb for girls.</abbr>+++
++
+I used https://www.joann.com/hampton-arts-washable-ink-pad/xprd77670.html[this stamp pad] to take the fingerprint.
 
 .. Child's passport
 .. Child's birth certificate
 .. Whatever documents show Proof of Indian origin : parents' passports if you are Indian citizens, otherwise consult the checklist. 
+.. Documents were required to be in PDF format, less than 1 MB. https://superuser.com/questions/22064/reduce-pdf-file-size[These links] might https://unix.stackexchange.com/questions/274428/how-do-i-reduce-the-size-of-a-pdf-file-that-contains-images[help].
 .. I did not upload a marriage certificate here because I assumed that was for spouse-based-OCI.
 
-. When you start filling out the forms, you will get a "temporary id" (different from the CKGS one footnote:[Of course. Did you expect an integrated experience?]). You can use this to resume saved forms. But at some point, you will get a new *File Reference Number*. If you want to resume uploading docs/images, you need this number, not the "temporary id".
+. When you start filling out the forms, you will get a "temporary id" (+++<abbr title="Of course. Did you expect an integrated experience?">different from the CKGS one</abbr>+++). You can use this to resume saved forms. But at some point, you will get a new *File Reference Number*. If you want to resume uploading docs/images, you need this number, not the "temporary id".
 +
 Save this *File Reference Number* carefully, because this is what will tie in to the CKGS website later.
 
-. You will also get a filled OCI application form at the end, which will be part of the final packet you send to CKGS.
+. You will get a filled OCI application form at the end, which will be part of the final packet you send to CKGS.
+
+++++
+</div></details>
+++++
 
 
-== Return to CKGS website, assembling the packet
+== 3. Return to CKGS website, assemble the packet
 
-. You now need to link the two parts together footnote:[This now feels like a proper puzzle, doesn't it?]. 
+++++
+<details> <summary><a>Details of Step 3 back on the CKGS website</a>
+</summary><div>
+++++
 
-. Go the CKGS home page, and look for the "Link Govt Reference Number with CKGS .." section, follow the instructions.
+. You now need to +++<abbr title="This now feels like a proper puzzle, doesn't it?">link the two steps together</abbr>+++.
 
-. CKGS should now present you with a full checklist of documents that need to be assembled footnote:[The checklist document itself is part of the checklist. Some say that Christopher Nolan got the idea for Inception while applying for an OCI card.]
+. Go the CKGS home page, and look for the link:ckgs-govt-link.png["Link Govt Reference Number with CKGS .."] section and follow those instructions. From this point, you can use the _My Account_ feature on CKGS to log in with the *File Reference Number*.
+
+. CKGS should now present you with a full checklist of documents +++<abbr title="The checklist document itself is part of the checklist. Some say that Christopher Nolan got the idea for Inception while applying for an OCI card.">that need to be sent over.</abbr>+++
 
 . Some notes about these documents
 .. Original passport. CKGS is supposed to ship this back to you after verification (without waiting for the full OCI card processing).
 
 .. The birth certificate here needs to be http://www.internationalapostille.com/what-is-an-apostille/[apostilled]. Not simply notarized, but attested to be original by the Secretary of State him/herself. This is usually a lengthy process that involves mailing your documents to the state capital. Sometimes, you can find https://www.yelp.com/biz/4-notary-and-29-apostille-service-sunnyvale-3?q=apostille[intermediaries] to help you. 
 +
-Unlike a notary, the apostille process typically involves adding a certification sheet on top of the original certificate (this may vary from state to state). So this means you are going to have to send in the original birth certificate to CKGS footnote:[if the prospect of mailing additional *original* documents to CKGS excites you, you should consider an alternate career in Indian bureacracy.]. https://www.immihelp.com/forum/india-passport-visa-oci/184436-apostilled-birth-certificate?p=582917#post582917[This post] may help you.
+Unlike a notary, the apostille process typically involves adding a certification sheet on top of the original certificate (this may vary from state to state). So this means you are going to have to send in the  +++<abbr title="if the prospect of mailing additional <b>original<b> documents to CKGS excites you, you should consider an alternate career in Indian bureacracy.">original birth certificate to CKGS</abbr>+++. https://www.immihelp.com/forum/india-passport-visa-oci/184436-apostilled-birth-certificate?p=582917#post582917[This post] may help you.
 
 .. A couple of documents need to be notarized with both parents' signatures (parental auth form and affidavit in lieu of originals).
 
-.. Legal status of parents in US - I included copies of our visa stamps, though technically the I-94 might be a more appropriate document footnote:[Why does the Govt of *India* care about my *US* visa status in order to issue an OCI card for my child, you may wonder? Keep wondering, because I have no clue.]   
+.. +++<abbr title="Why does the Govt of *India* care about my *US* visa status in order to issue an OCI card for my child, you may wonder? Keep wondering, because I have no clue.">Legal status of parents in US</abbr>+++ - I included copies of our visa stamps, though technically the I-94 might be a more appropriate document   
+. Post/drop off the completed packet and wait for updates from CKGS.
+++++
+</div></details>
+++++
 
 == Final steps
+++++
+<details> <summary><a>Hearing back from CKGS</a>
+</summary><div>
+++++
+
+. CKGS communicates different states of the application through text message and on their website.
+
+. Ideally, your child's passport should be returned within a week of receipt.
+
+. The actual OCI card application processing takes much longer - as a rough estimate, 3 months would be appropriate. https://www.immihelp.com/forum/india-passport-visa-oci/165953-applying-for-oci-for-minor-checklist?p=509140#post509140[Sample] https://www.immihelp.com/experience/view-1-103-oci_card.html[timelines].
+
+++++
+</div></details>
+++++
+
+***
 
 
++++
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
++++
