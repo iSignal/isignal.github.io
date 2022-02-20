@@ -1,3 +1,4 @@
+
 # Personal task management system
 
 ## Why?
@@ -44,7 +45,8 @@ RTM has one of the best balance between free and paid plans. They make their fre
 
 1. **[Toodledo](https://www.toodledo.com)** was my previous favorite and I used to pay for it. The UI design is more plain but it supports all the key features. The only slight negatives are that saved search is a paid feature and their mobile sync has a few rare issues. They also had some kind of a management change recently, hopefully it will stabilize at some point.
 2. **[Obsidian tasks](https://schemar.github.io/obsidian-tasks/)** Task managers should technically be implementable with a csv file or spreadsheet and some custom filtering logic on top of it. Obsidian tasks comes close to this idea but there's two problems with this approach - mobile notifications aren't supported (yet) and the task format could use improvement (the use of unicode chars, priority has to be the last character). The nice part is that saved searches are supported through a very [flexible interface](https://schemar.github.io/obsidian-tasks/queries/filters/. I hope this can be made workable at some point in the future because that would allow tasks and related notes to be kept in the same place and it would make it one less service to sign up for.
-3. **Pen and paper** is a school of thought that is a popular alternative that gets mentioned on Hacker news frequently. I've always considered it quite inferior because of the lack of text search. I guess I could scan tasks into digital form but that level of effort seems only appropriate for full time project managers.
+3. **Pen and paper** is a school of thought that is a popular alternative that gets mentioned on Hacker news frequently. I've tried it but found it consistently inferior because of the lack of text search and accessibility. 
+4. [todo.txt](http://todotxt.org/) is similar to the obsidian tasks approach of plain-text files with app processing logic on top. But it doesn't support a start date in the standard. [SwiftDo](https://swiftodoapp.com/) technically extends it to support a start date but I haven't tried it yet.
 
 
 
