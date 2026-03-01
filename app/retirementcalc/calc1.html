@@ -3,47 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retirement Strategy Simulator</title>
+    <title>Advanced Retirement Simulator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; margin: 20px; background: #f4f7f9; color: #333; }
-        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h2 { color: #2c3e50; margin-top: 0; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
+        .container { max-width: 1150px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; margin-top: 0; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        
+        /* Layout */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; }
+        .input-group { margin-bottom: 15px; position: relative; }
+        
+        /* Tooltip Styles */
+        .help-icon { display: inline-block; width: 16px; height: 16px; background: #cbd5e0; color: white; border-radius: 50%; text-align: center; font-size: 11px; font-weight: bold; cursor: help; margin-left: 5px; vertical-align: middle; }
+        .help-icon:hover::after { content: attr(data-tip); position: absolute; left: 0; top: -45px; background: #2d3748; color: white; padding: 8px 12px; border-radius: 6px; font-size: 0.75em; width: 250px; z-index: 10; font-weight: normal; line-height: 1.2; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
         label { display: block; font-weight: 600; font-size: 0.9em; margin-bottom: 5px; color: #4a5568; }
         input, select { width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 1em; }
+        
         .checkbox-group { display: flex; align-items: center; margin-bottom: 15px; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; }
         .checkbox-group input { width: auto; margin-right: 10px; }
+        
         .advanced-fields { display: none; padding: 15px; background: #fff; border: 1px dashed #cbd5e0; border-radius: 6px; margin-bottom: 15px; }
+        
         button { width: 100%; padding: 15px; background: #3182ce; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: background 0.2s; }
         button:hover { background: #2b6cb0; }
+        
+        /* Outputs */
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; }
         .stat { background: #ebf8ff; padding: 20px; border-radius: 10px; border: 1px solid #bee3f8; text-align: center; }
         .stat h3 { margin: 0; font-size: 0.85em; color: #2c5282; text-transform: uppercase; }
         .stat p { margin: 8px 0 0; font-size: 1.4em; font-weight: 700; color: #2a4365; }
+        
         .chart-container { margin-top: 30px; height: 450px; }
         table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 0.9em; }
         th { background: #edf2f7; text-align: left; padding: 12px; border-bottom: 2px solid #cbd5e0; }
         td { padding: 12px; border-bottom: 1px solid #edf2f7; }
-        tr:hover { background-color: #f7fafc; }
-        .neg { color: #e53e3e; font-weight: bold; }
+        .highlight { color: #3182ce; font-weight: 600; }
+        .exhausted { color: #e53e3e; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Retirement Strategy Simulator</h2>
+    <h2>Retirement Strategy Simulator ⚖️</h2>
     
     <div class="grid">
         <div class="input-section">
             <div class="input-group">
-                <label>Starting Portfolio Value ($)</label>
+                <label>Starting Portfolio Value ($) <span class="help-icon" data-tip="The total cash/investments you have on Day 1 of retirement.">?</span></label>
                 <input type="number" id="startValue" value="1000000">
             </div>
             
             <div class="input-group">
-                <label>Withdrawal Strategy</label>
+                <label>Withdrawal Strategy <span class="help-icon" data-tip="Fixed: Spend a set amount adjusted for inflation. Percent: Withdraw a slice of whatever is left each year.">?</span></label>
                 <select id="withdrawType" onchange="updateWithdrawLabel()">
                     <option value="fixed">Fixed Monthly Net (In Today's Dollars)</option>
                     <option value="percent">Annual % of Current Portfolio</option>
@@ -51,50 +64,55 @@
             </div>
 
             <div class="input-group">
-                <label id="withdrawLabel">Monthly Net Amount ($)</label>
+                <label id="withdrawLabel">Monthly Net Amount ($) <span class="help-icon" data-tip="The take-home cash you want in your bank account every month.">?</span></label>
                 <input type="number" id="withdrawVal" value="4000">
+            </div>
+
+            <div class="input-group">
+                <label>Stagnation Period (Years) <span class="help-icon" data-tip="Number of years at the START with 0% growth. The calculator will boost later years to maintain your 6% overall target.">?</span></label>
+                <input type="number" id="stagnationYears" value="0">
             </div>
         </div>
         
         <div class="input-section">
             <div class="input-group">
-                <label>Portfolio Growth Rate (%)</label>
+                <label>Overall Growth Rate (%) <span class="help-icon" data-tip="The target Compound Annual Growth Rate (CAGR) for the entire 50-year period.">?</span></label>
                 <input type="number" id="growthRate" value="6">
             </div>
             <div class="input-group">
-                <label>Annual Inflation Rate (%)</label>
+                <label>Annual Inflation Rate (%) <span class="help-icon" data-tip="The rate at which prices rise, eroding your purchasing power over time.">?</span></label>
                 <input type="number" id="inflationRate" value="2.5">
             </div>
 
             <div class="checkbox-group">
                 <input type="checkbox" id="advancedToggle" onchange="toggleAdvanced()">
-                <label for="advancedToggle" style="margin-bottom:0">Multiple Tax Rates (Advanced)</label>
+                <label for="advancedToggle" style="margin-bottom:0">Multiple Tax Rates (Advanced) <span class="help-icon" data-tip="Switch from one tax bracket to another at a specific year (e.g. when you hit RMD age).">?</span></label>
             </div>
 
             <div class="input-group" id="tax1Group">
-                <label>Primary Tax Rate (%)</label>
+                <label>Primary Tax Rate (%) <span class="help-icon" data-tip="The effective tax rate applied to your withdrawals.">?</span></label>
                 <input type="number" id="tax1" value="15">
             </div>
 
             <div id="advancedFields" class="advanced-fields">
                 <div class="input-group">
-                    <label>Switch after Year (N)</label>
+                    <label>Switch after Year (N) <span class="help-icon" data-tip="The year index when Tax Rate 2 begins.">?</span></label>
                     <input type="number" id="switchYear" value="10">
                 </div>
                 <div class="input-group">
-                    <label>Secondary Tax Rate (%)</label>
+                    <label>Secondary Tax Rate (%) <span class="help-icon" data-tip="The new tax rate applied from year N onwards.">?</span></label>
                     <input type="number" id="tax2" value="10">
                 </div>
             </div>
 
             <div class="input-group">
-                <label>Years to Simulate</label>
+                <label>Years to Simulate <span class="help-icon" data-tip="Total duration of the retirement projection.">?</span></label>
                 <input type="number" id="years" value="50">
             </div>
         </div>
     </div>
 
-    <button onclick="simulate()">Run Simulation</button>
+    <button onclick="simulate()">Run Financial Simulation</button>
 
     <div class="summary" id="summaryArea"></div>
 
@@ -107,9 +125,10 @@
             <tr>
                 <th>Year</th>
                 <th>Portfolio (Nominal)</th>
-                <th>Portfolio (In Today's Dollars)</th>
+                <th>Portfolio (In Today's $)</th>
                 <th>Net Monthly (Nominal)</th>
-                <th>Net Monthly (In Today's Dollars)</th>
+                <th>Net Monthly (In Today's $)</th>
+                <th>Yearly Growth %</th>
             </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -122,12 +141,13 @@ let myChart = null;
 function updateWithdrawLabel() {
     const type = document.getElementById('withdrawType').value;
     const label = document.getElementById('withdrawLabel');
+    const tip = label.querySelector('.help-icon');
     const input = document.getElementById('withdrawVal');
     if (type === 'fixed') {
-        label.innerText = "Monthly Net Amount ($)";
+        label.innerHTML = `Monthly Net Amount ($) <span class="help-icon" data-tip="Take-home cash you want in today's purchasing power.">?</span>`;
         input.value = "4000";
     } else {
-        label.innerText = "Annual Withdrawal % of Current Balance";
+        label.innerHTML = `Annual Withdrawal % <span class="help-icon" data-tip="Percent of current balance taken each year. Spendable amount will fluctuate.">?</span>`;
         input.value = "4";
     }
 }
@@ -141,13 +161,24 @@ function simulate() {
     const startValue = parseFloat(document.getElementById('startValue').value);
     const withdrawType = document.getElementById('withdrawType').value;
     const withdrawVal = parseFloat(document.getElementById('withdrawVal').value);
-    const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
+    const targetCAGR = parseFloat(document.getElementById('growthRate').value) / 100;
     const inflationRate = parseFloat(document.getElementById('inflationRate').value) / 100;
+    const stagnationM = parseInt(document.getElementById('stagnationYears').value);
     const tax1 = parseFloat(document.getElementById('tax1').value) / 100;
     const tax2 = parseFloat(document.getElementById('tax2').value) / 100;
     const isAdvanced = document.getElementById('advancedToggle').checked;
     const switchYear = parseInt(document.getElementById('switchYear').value);
     const totalYears = parseInt(document.getElementById('years').value);
+
+    // Calculate Recovery Growth Rate
+    // Formula: (1+R)^Total = (1+0)^M * (1+r_new)^(Total-M)
+    let recoveryGrowth = targetCAGR;
+    if (stagnationM > 0 && stagnationM < totalYears) {
+        const totalTargetMultiplier = Math.pow(1 + targetCAGR, totalYears);
+        recoveryGrowth = Math.pow(totalTargetMultiplier, 1 / (totalYears - stagnationM)) - 1;
+    } else if (stagnationM >= totalYears) {
+        recoveryGrowth = 0;
+    }
 
     let portfolio = startValue;
     let dataNominal = [];
@@ -159,39 +190,34 @@ function simulate() {
     for (let year = 1; year <= totalYears; year++) {
         let currentTaxRate = (isAdvanced && year > switchYear) ? tax2 : tax1;
         let inflationMultiplier = Math.pow(1 + inflationRate, year - 1);
+        let yearlyGrowth = (year <= stagnationM) ? 0 : recoveryGrowth;
         
         let annualGrossNominal;
         let monthlyNetNominal;
-        let monthlyNetInTodaysDollars;
+        let monthlyNetToday;
 
         if (withdrawType === 'fixed') {
-            // Option 1: Fixed monthly net in today's dollars
-            monthlyNetInTodaysDollars = withdrawVal;
-            monthlyNetNominal = monthlyNetInTodaysDollars * inflationMultiplier;
+            monthlyNetToday = withdrawVal;
+            monthlyNetNominal = monthlyNetToday * inflationMultiplier;
             annualGrossNominal = (monthlyNetNominal * 12) / (1 - currentTaxRate);
         } else {
-            // Option 2: Percentage of current portfolio
-            // Calculated annually based on current balance
             let annualGross = portfolio * (withdrawVal / 100);
             annualGrossNominal = annualGross;
-            let annualNet = annualGross * (1 - currentTaxRate);
-            monthlyNetNominal = annualNet / 12;
-            monthlyNetInTodaysDollars = monthlyNetNominal / inflationMultiplier;
+            monthlyNetNominal = (annualGross * (1 - currentTaxRate)) / 12;
+            monthlyNetToday = monthlyNetNominal / inflationMultiplier;
         }
 
-        // Apply Withdrawal
         if (portfolio >= annualGrossNominal) {
             portfolio -= annualGrossNominal;
         } else {
             if (!exhaustedYear && portfolio > 0) exhaustedYear = year;
             annualGrossNominal = Math.max(0, portfolio);
             monthlyNetNominal = (annualGrossNominal * (1 - currentTaxRate)) / 12;
-            monthlyNetInTodaysDollars = monthlyNetNominal / inflationMultiplier;
+            monthlyNetToday = monthlyNetNominal / inflationMultiplier;
             portfolio = 0;
         }
 
-        // Apply Growth
-        portfolio *= (1 + growthRate);
+        portfolio *= (1 + yearlyGrowth);
         
         let endYearInflation = Math.pow(1 + inflationRate, year);
         let portfolioReal = portfolio / endYearInflation;
@@ -203,21 +229,22 @@ function simulate() {
         tableHtml += `<tr>
             <td>${year}</td>
             <td>$${portfolio.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
-            <td style="color:#3182ce; font-weight:500;">$${portfolioReal.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+            <td class="highlight">$${portfolioReal.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
             <td>$${monthlyNetNominal.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
-            <td>$${monthlyNetInTodaysDollars.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+            <td>$${monthlyNetToday.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+            <td>${(yearlyGrowth * 100).toFixed(2)}%</td>
         </tr>`;
 
         if (portfolio <= 0 && year > (exhaustedYear || totalYears)) break;
     }
 
     document.getElementById('tableBody').innerHTML = tableHtml;
-    
     const finalVal = parseFloat(dataReal[dataReal.length - 1]);
+    
     document.getElementById('summaryArea').innerHTML = `
-        <div class="stat"><h3>End Balance (In Today's $)</h3><p>$${finalVal.toLocaleString()}</p></div>
-        <div class="stat"><h3>Status</h3><p class="${exhaustedYear ? 'neg' : ''}">${exhaustedYear ? 'Exhausted in Year ' + exhaustedYear : 'Sustainable'}</p></div>
-        <div class="stat"><h3>Strategy</h3><p>${withdrawType === 'fixed' ? 'Fixed Spend' : 'Variable %'}</p></div>
+        <div class="stat"><h3>End Value (Today's $)</h3><p>$${finalVal.toLocaleString()}</p></div>
+        <div class="stat"><h3>Recovery Growth</h3><p>${(recoveryGrowth * 100).toFixed(2)}%</p></div>
+        <div class="stat"><h3>Sustainability</h3><p class="${exhaustedYear ? 'exhausted' : ''}">${exhaustedYear ? 'Broke in Yr ' + exhaustedYear : 'Secure'}</p></div>
     `;
 
     updateChart(labels, dataNominal, dataReal);
@@ -231,28 +258,19 @@ function updateChart(labels, dataNominal, dataReal) {
         data: {
             labels: labels,
             datasets: [{
-                label: "Portfolio (In Today's Dollars)",
+                label: "Today's Dollars",
                 data: dataReal,
                 borderColor: '#3182ce',
                 backgroundColor: 'rgba(49, 130, 206, 0.1)',
                 fill: true,
                 tension: 0.1,
                 borderWidth: 3
-            }, {
-                label: 'Portfolio (Nominal Value)',
-                data: dataNominal,
-                borderColor: '#cbd5e0',
-                borderDash: [5, 5],
-                fill: false,
-                tension: 0.1
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: { ticks: { callback: value => '$' + value.toLocaleString() } }
-            }
+            scales: { y: { ticks: { callback: value => '$' + value.toLocaleString() } } }
         }
     });
 }
