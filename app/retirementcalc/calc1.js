@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirement Withdrawal Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: -apple-system, sans-serif; line-height: 1.6; margin: 20px; background: #f4f7f6; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .input-group { margin-bottom: 10px; }
+        label { display: block; font-weight: bold; font-size: 0.9em; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; font-weight: bold; }
+        button:hover { background: #27ae60; }
+        .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; text-align: center; }
+        .stat { background: #e8f8f5; padding: 15px; border-radius: 8px; border: 1px solid #d1f2eb; }
+        .stat h3 { margin: 0; font-size: 0.8em; color: #16a085; text-transform: uppercase; }
+        .stat p { margin: 5px 0 0; font-size: 1.2em; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 0.85em; }
+        th { background: #f8f9fa; text-align: left; padding: 10px; border-bottom: 2px solid #dee2e6; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+        .chart-container { margin-top: 30px; height: 400px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Retirement Withdrawal Simulator</h2>
+    
+    <div class="grid">
+        <div class="input-section">
+            <div class="input-group">
+                <label>Starting Portfolio ($)</label>
+                <input type="number" id="startValue" value="1000000">
+            </div>
+            <div class="input-group">
+                <label>Withdrawal Amount (Fixed $ or % of start)</label>
+                <input type="number" id="withdrawVal" value="40000">
+            </div>
+            <div class="input-group">
+                <label>Portfolio Growth Rate (%)</label>
+                <input type="number" id="growthRate" value="7">
+            </div>
+            <div class="input-group">
+                <label>Annual Inflation (%)</label>
+                <input type="number" id="inflationRate" value="3">
+            </div>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label>Tax Rate 1 (%) - Years 1 to N</label>
+                <input type="number" id="tax1" value="22">
+            </div>
+            <div class="input-group">
+                <label>Switch Tax at Year (N)</label>
+                <input type="number" id="switchYear" value="10">
+            </div>
+            <div class="input-group">
+                <label>Tax Rate 2 (%) - Year N onwards</label>
+                <input type="number" id="tax2" value="15">
+            </div>
+            <div class="input-group">
+                <label>Years to Simulate</label>
+                <input type="number" id="years" value="30">
+            </div>
+        </div>
+    </div>
+
+    <button onclick="simulate()">Run Simulation</button>
+
+    <div class="summary" id="summaryArea"></div>
+
+    <div class="chart-container">
+        <canvas id="retirementChart"></canvas>
+    </div>
+
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Portfolio (Nominal)</th>
+                <th>Portfolio (Real)</th>
+                <th>Net Monthly (Nominal)</th>
+                <th>Net Monthly (Real)</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script>
+let myChart = null;
+
+function simulate() {
+    const startValue = parseFloat(document.getElementById('startValue').value);
+    let withdrawVal = parseFloat(document.getElementById('withdrawVal').value);
+    const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
+    const inflationRate = parseFloat(document.getElementById('inflationRate').value) / 100;
+    const tax1 = parseFloat(document.getElementById('tax1').value) / 100;
+    const tax2 = parseFloat(document.getElementById('tax2').value) / 100;
+    const switchYear = parseInt(document.getElementById('switchYear').value);
+    const totalYears = parseInt(document.getElementById('years').value);
+
+    // Initial Annual Gross Withdrawal
+    let currentWithdrawalGross = (withdrawVal < 100) ? (startValue * (withdrawVal / 100)) : withdrawVal;
+    
+    let portfolio = startValue;
+    let dataNominal = [];
+    let dataReal = [];
+    let labels = [];
+    let tableHtml = "";
+
+    for (let year = 1; year <= totalYears; year++) {
+        let currentTax = (year <= switchYear) ? tax1 : tax2;
+        let inflationFactor = Math.pow(1 + inflationRate, year - 1);
+        
+        // After-tax calculations
+        let netAnnual = currentWithdrawalGross * (1 - currentTax);
+        let netMonthlyNominal = netAnnual / 12;
+        let netMonthlyReal = netMonthlyNominal / inflationFactor;
+
+        // Apply withdrawal to portfolio
+        if (portfolio >= currentWithdrawalGross) {
+            portfolio -= currentWithdrawalGross;
+        } else {
+            currentWithdrawalGross = portfolio;
+            netAnnual = currentWithdrawalGross * (1 - currentTax);
+            netMonthlyNominal = netAnnual / 12;
+            netMonthlyReal = netMonthlyNominal / inflationFactor;
+            portfolio = 0;
+        }
+
+        // Portfolio Growth
+        portfolio *= (1 + growthRate);
+        
+        // Store for graph
+        let portfolioReal = portfolio / Math.pow(1 + inflationRate, year);
+        dataNominal.push(portfolio.toFixed(0));
+        dataReal.push(portfolioReal.toFixed(0));
+        labels.push("Year " + year);
+
+        // Add to table
+        tableHtml += `<tr>
+            <td>${year}</td>
+            <td>$${portfolio.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+            <td>$${portfolioReal.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+            <td>$${netMonthlyNominal.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+            <td>$${netMonthlyReal.toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+        </tr>`;
+
+        // Adjust withdrawal for next year inflation
+        currentWithdrawalGross *= (1 + inflationRate);
+
+        if (portfolio <= 0) break;
+    }
+
+    // Update UI
+    document.getElementById('tableBody').innerHTML = tableHtml;
+    
+    const finalPortfolioReal = dataReal[dataReal.length - 1];
+    document.getElementById('summaryArea').innerHTML = `
+        <div class="stat"><h3>End Balance (Real)</h3><p>$${parseFloat(finalPortfolioReal).toLocaleString()}</p></div>
+        <div class="stat"><h3>Sustainability</h3><p>${portfolio > 0 ? 'Success' : 'Exhausted'}</p></div>
+        <div class="stat"><h3>Est. Monthly Income</h3><p>$${(dataReal[0] ? parseFloat(dataReal[0]/totalYears).toLocaleString() : '0')}</p></div>
+    `;
+
+    updateChart(labels, dataNominal, dataReal);
+}
+
+function updateChart(labels, dataNominal, dataReal) {
+    const ctx = document.getElementById('retirementChart').getContext('2d');
+    if (myChart) myChart.destroy();
+    
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Nominal Value (Face Value)',
+                data: dataNominal,
+                borderColor: '#2ecc71',
+                backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                fill: true,
+                tension: 0.3
+            }, {
+                label: 'Real Value (Purchasing Power)',
+                data: dataReal,
+                borderColor: '#3498db',
+                borderDash: [5, 5],
+                fill: false,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, ticks: { callback: value => '$' + value.toLocaleString() } }
+            }
+        }
+    });
+}
+
+// Run once on load
+simulate();
+</script>
+
+</body>
+</html>
